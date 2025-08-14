@@ -14,6 +14,7 @@ const reservedKeys = {
   unmount: true,
   isMounted: true,
   findMounted: true,
+  findAllMounted: true,
   extend: true,
 }
 

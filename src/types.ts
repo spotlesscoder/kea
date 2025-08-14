@@ -80,6 +80,8 @@ export interface LogicWrapperAdditions<LogicType extends Logic> {
   isMounted: (keyOrProps?: KeyType | Record<string, any>) => boolean
   /** Find a mounted logic or return null */
   findMounted: (keyOrProps?: KeyType | Record<string, any>) => BuiltLogic<LogicType> | null
+  /** Find all mounted logics */
+  findAllMounted: () => BuiltLogic<LogicType>[]
   /** Find a mounted logic or throw */
   find: (keyOrProps?: KeyType | Record<string, any>) => BuiltLogic<LogicType>
   extend: <ExtendLogicType extends Logic = LogicType>(

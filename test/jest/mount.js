@@ -176,6 +176,32 @@ describe('mount', () => {
       expect(logic.find(12)).toEqual(logic({ id: 12 }))
     })
 
+    test('findAllMounted() on logicWrapper does not build', () => {
+      const logic = kea({})
+      const isLogicBuilt = () => !!getContext().wrapperContexts.get(logic)?.builtLogics.get(undefined)
+      expect(isLogicBuilt()).toBeFalsy()
+      expect(logic.findAllMounted()).toEqual([])
+      expect(isLogicBuilt()).toBeFalsy()
+      const u1 = logic.mount()
+      expect(isLogicBuilt()).toBeTruthy()
+      expect(logic.findAllMounted()).toEqual([logic()])
+      u1()
+      expect(logic.findAllMounted()).toEqual([])
+    })
+
+    test('findAllMounted() returns all mounted logics with keys', () => {
+      const logic = kea({ key: ({ id }) => id })
+      const l1 = logic({ id: 12 })
+      const l2 = logic({ id: 33 })
+      const u1 = l1.mount()
+      const u2 = l2.mount()
+      expect(logic.findAllMounted()).toEqual([l1, l2])
+      u1()
+      expect(logic.findAllMounted()).toEqual([l2])
+      u2()
+      expect(logic.findAllMounted()).toEqual([])
+    })
+
     test('buildLogic', async () => {
       const logic = kea({}).build()
       expect(logic.isMounted()).toEqual(false)

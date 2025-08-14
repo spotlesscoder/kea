@@ -107,6 +107,22 @@ export function kea<L extends Logic = Logic>(
       return null
     }
   }
+  wrapper.findAllMounted = () => {
+    const wrapperContext = getContext().wrapperContexts.get(wrapper)
+    const found: BuiltLogic<L>[] = []
+    if (!wrapperContext) {
+      return found
+    }
+    const {
+      mount: { counter },
+    } = getContext()
+    for (const logic of wrapperContext.builtLogics.values()) {
+      if (counter[logic.pathString] > 0) {
+        found.push(logic as BuiltLogic<L>)
+      }
+    }
+    return found
+  }
   wrapper.find = (keyOrProps?: Record<string, any> | KeyType) => {
     const builtLogic =
       typeof keyOrProps === 'object' || typeof keyOrProps === 'undefined'

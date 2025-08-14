@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.1.7 - 2025-08-14
+- Add `logic.findAllMounted()` to find all mounted instances of a logic, regardless of the key.
+
 ## 3.1.6 - 2023-12-19
 - Increase the amount of supported selectors in a selector's input from 11 to 16.
 
